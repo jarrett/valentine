@@ -1,1 +1,0 @@
-gem 'rmagick', :require => 'RMagick'
