@@ -44,9 +44,9 @@ class Valentine
 		CIRCLE_COUNT.times do |circle_index|
 			# Draw a circle in the set.
 			line_art = Magick::Draw.new # Initialize a Magick::Draw instance, which handles line drawing
-			line_art.fill = 'none'
+			line_art.fill = 'black'
 			line_art.stroke(COLOR)
-			x, y = point_on_base_circle(degrees_offset_per_circle * circle_index)
+			y, x = point_on_base_circle(degrees_offset_per_circle * circle_index)
 			radius = radius_from(x, y)
 			line_art.circle(x, y, x + radius, y) # Draw a circle into the buffer
 			line_art.draw(@image) # Write the contents of the buffer onto the final image
@@ -66,22 +66,16 @@ class Valentine
 	# Return an array of the form [x_coord, y_coord] representing a point on the base circle
 	# at the given number of degrees.
 	def point_on_base_circle(degrees)
-		radians = degrees * (Math::PI / 180)
-		[
-			BASE_X + (BASE_RAD * Math.cos(radians)),
-			BASE_Y + (BASE_RAD * Math.sin(radians))
-		]
-		#raise 'Valentine#point_on_base_circle is not implemented. Please write this method.'
+		raise 'Valentine#point_on_base_circle is not implemented. Please write this method.'
+		# Hint: The following may be useful to you:
+		# - Math::PI
+		# - Math.cos(radians)
+		# - Math.sin(radians)
 	end
 	
 	# Compute the radius of a circle in the set with center at (x, y).
 	def radius_from(x, y)
-		apex_x = BASE_X
-		apex_y = BASE_Y - BASE_RAD
-		dx = x - apex_x
-		dy = y - apex_y
-		Math.sqrt(dx**2 + dy**2)
-		#raise 'Valentine#radius_from is not implemented. Please write this method.'
+		raise 'Valentine#radius_from is not implemented. Please write this method.'
 		# Hint: This should be computed based on the assumption that the resulting
 		# circle must pass through 12 o'clock on the base circle.
 	end
@@ -94,9 +88,9 @@ class Valentine
 		text.pointsize = 40
 		text.fill = COLOR
 		text.gravity = Magick::SouthGravity
-		text.annotate(@image, 0, 0, 0, 60, Base64.decode64(MESSAGE_1_64))
+		text.annotate(@image, 0, 0, 0, 60, Base64.encode64(MESSAGE_1_64))
 		text.pointsize = 20
-		text.annotate(@image, 0, 0, 0, 20, Base64.decode64(MESSAGE_2_64))
+		text.annotate(@image, 0, 0, 0, 20, Base64.encode64(MESSAGE_2_64))
 	end
 	
 	def write_to_file
